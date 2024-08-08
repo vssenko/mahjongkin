@@ -3,6 +3,8 @@ use mobot::*;
 mod bot;
 mod config;
 
+pub type Router = mobot::Router<()>;
+
 #[tokio::main]
 async fn main() {
     let _ = dotenvy::dotenv();
@@ -14,6 +16,7 @@ async fn main() {
     let mut router = mobot::Router::new(client);
 
     bot::commands::setup_commands(&mut router);
+    bot::message_handlers::setup_handlers(&mut router);
 
     router.start().await;
 }

@@ -1,9 +1,9 @@
 use api::SendMessageRequest;
 use mobot::*;
 
-pub fn attach_route(router: &mut mobot::Router<()>) {
+pub fn attach_route(router: &mut crate::Router) {
     router.add_route(
-        Route::Any(Matcher::BotCommand("recalculate_stat".into())),
+        Route::Message(Matcher::BotCommand("recalculate_stat".into())),
         |e: Event, _: State<()>| async move {
             let chat_id = e.update.chat_id()?;
 
