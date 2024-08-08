@@ -1,5 +1,6 @@
-use teloxide::prelude::*;
+use mobot::*;
 
+mod bot;
 mod config;
 
 #[tokio::main]
@@ -9,11 +10,10 @@ async fn main() {
 
     log::info!("Starting Mahjongkin bot...");
 
-    let bot = Bot::new(config::get().tg_token.clone());
+    let client = mobot::Client::new(config::get().tg_token.clone());
+    let mut router = mobot::Router::new(client);
 
-    teloxide::repl(bot, |bot: Bot, msg: Message| async move {
-        bot.send_dice(msg.chat.id).await?;
-        Ok(())
-    })
-    .await;
+    bot::commands::setup_commands(&mut router);
+
+    router.start().await;
 }
