@@ -2,6 +2,7 @@ use mobot::*;
 
 mod bot;
 mod config;
+mod models;
 
 pub type Router = mobot::Router<()>;
 
